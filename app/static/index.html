@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#153d35" />
+    <title>Staydesk · Hotelservice-Demo</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Zum Inhalt</a>
+    <aside class="sidebar">
+      <a class="brand" href="#"
+        ><span class="brand-icon" aria-hidden="true">s.</span>staydesk</a
+      >
+      <p class="sidebar-caption">Guter Service. Klarer Status.</p>
+      <nav aria-label="Hauptnavigation">
+        <a href="#guest" class="nav-active"
+          ><span aria-hidden="true">01</span> Service bestellen</a
+        >
+        <a href="#orders-section"
+          ><span aria-hidden="true">02</span> Auftragsübersicht</a
+        >
+        <a href="#simulation"
+          ><span aria-hidden="true">03</span> Demo-Steuerung</a
+        >
+      </nav>
+      <div class="sidebar-note">
+        <span class="live-dot" aria-hidden="true"></span> Lokal &
+        nachvollziehbar
+        <p>Arbeitsprobe · v1.0<br />Hotelservice mit simulierten Diensten</p>
+      </div>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>HOTEL OPERATIONS <span class="muted">/</span> SERVICE DESK</span
+        ><span class="demo-badge">SIMULATION</span>
+      </header>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">VOM GÄSTEWUNSCH ZUM AUFTRAG</p>
+          <h1>Aufmerksam empfangen.<br /><em>Zuverlässig weitergeben.</em></h1>
+          <p class="subtitle">
+            Ein Wunsch, die richtigen Teams und jederzeit ein klarer
+            Bearbeitungsstand.
+          </p>
+        </div>
+        <div class="intro-mark" aria-hidden="true">
+          <span>101</span><small>AT YOUR SERVICE</small>
+        </div>
+      </section>
+      <div class="notice">
+        <span class="notice-icon" aria-hidden="true">i</span>
+        <p>
+          <strong>Eine lokale Arbeitsprobe.</strong> Textauswertung,
+          Hotelverwaltung, Housekeeping und Küche sind Simulatoren. Es werden
+          keine echten Bestellungen ausgelöst.
+        </p>
+      </div>
+      <div
+        id="feedback"
+        class="feedback"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></div>
+      <div id="pending-banner" class="warning" hidden>
+        <strong>Eine Sendung wartet auf Bestätigung.</strong>
+        <p>
+          Ihre letzte Übertragung ist noch nicht eindeutig quittiert. Fragen Sie
+          sie mit demselben Schlüssel erneut ab.
+        </p>
+        <button id="retry-pending" class="primary">
+          Letzte Sendung erneut abfragen
+        </button>
+      </div>
+      <div class="stats" aria-label="Auftragskennzahlen">
+        <div>
+          <span>Aufträge gesamt</span><strong id="stat-total">0</strong
+          ><small>dauerhaft gespeichert</small>
+        </div>
+        <div>
+          <span>Offene Aufträge</span><strong id="stat-open">0</strong
+          ><small>noch nicht erledigt</small>
+        </div>
+        <div>
+          <span>Klärung erforderlich</span><strong id="stat-attention">0</strong
+          ><small>Abgleich oder Übertragung offen</small>
+        </div>
+        <div>
+          <span>Beim Empfänger</span><strong id="stat-received">0</strong
+          ><small>eindeutige Annahmen im Simulator</small>
+        </div>
+      </div>
+      <section id="guest" class="guest-grid" aria-labelledby="guest-title">
+        <div class="card request-card">
+          <div class="card-heading">
+            <span class="step">1</span>
+            <div>
+              <h2 id="guest-title">Was dürfen wir für Sie tun?</h2>
+              <p>Wunsch eingeben und erkannte Positionen prüfen.</p>
+            </div>
+          </div>
+          <form id="request-form">
+            <label for="stay">Ihr Demoaufenthalt</label
+            ><select id="stay" required></select>
+            <label for="wish">Ihr Wunsch</label
+            ><textarea
+              id="wish"
+              rows="3"
+              maxlength="500"
+              required
+              placeholder="Ich hätte gerne zwei Handtücher und eine Pizza."
+            ></textarea>
+            <p class="field-hint">
+              Die Demo versteht Handtücher und Pizza Margherita mit Mengen von 1
+              bis 20.
+            </p>
+            <div class="examples" aria-label="Beispielwünsche">
+              <button
+                type="button"
+                data-example="Ich hätte gerne zwei Handtücher und eine Pizza."
+              >
+                2 Handtücher + 1 Pizza <span>↗</span></button
+              ><button type="button" data-example="Zwei Handtücher">
+                2 Handtücher <span>↗</span></button
+              ><button type="button" data-example="Eine Pizza">
+                1 Pizza <span>↗</span>
+              </button>
+            </div>
+            <button class="primary wide" id="interpret" type="submit">
+              Wunsch prüfen <span aria-hidden="true">→</span>
+            </button>
+          </form>
+        </div>
+        <div class="card confirmation-card">
+          <div class="card-heading">
+            <span class="step">2</span>
+            <div>
+              <h2>Prüfen & bestätigen</h2>
+              <p>Erst Ihre Bestätigung erstellt den Auftrag.</p>
+            </div>
+          </div>
+          <div id="preview-empty" class="empty-preview">
+            <span aria-hidden="true">✓</span>
+            <h3>Ihr Wunsch kommt zuerst.</h3>
+            <p>
+              Die erkannten Artikel erscheinen hier.<br />Sie entscheiden, was
+              bestellt wird.
+            </p>
+          </div>
+          <div id="questions" class="warning" role="status" hidden></div>
+          <div id="preview" hidden>
+            <div id="preview-items"></div>
+            <p class="field-hint">
+              Die Küche bietet in dieser Demo ausschließlich Pizza Margherita
+              an.
+            </p>
+            <div id="duplicate" class="warning" hidden>
+              <strong>Es gibt bereits passende offene Aufträge.</strong>
+              <p id="duplicate-text"></p>
+              <button type="button" id="show-existing" class="secondary">
+                Vorhandenen Status ansehen
+              </button>
+              <label class="checkbox"
+                ><input type="checkbox" id="additional" /> Ich möchte alle oben
+                gezeigten Positionen zusätzlich bestellen.</label
+              >
+            </div>
+            <button type="button" class="primary wide" id="confirm">
+              Verbindlich in der Demo bestellen
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+          <div class="confirmation-foot">
+            <span aria-hidden="true">◇</span> Regelbasierte Textauswertung ·
+            kein KI-Modell
+          </div>
+        </div>
+      </section>
+      <section id="orders-section" aria-labelledby="orders-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">JEDER AUFTRAG HAT SEINEN EIGENEN WEG</p>
+            <h2 id="orders-title">Die Teams sind am Zug.</h2>
+          </div>
+          <button class="secondary" id="refresh">Status aktualisieren ↻</button>
+        </div>
+        <div class="filter-row">
+          <label for="order-filter">Aufenthalt</label
+          ><select id="order-filter">
+            <option value="">Alle Demoaufenthalte</option></select
+          ><span id="updated" class="field-hint">Noch nicht aktualisiert</span>
+        </div>
+        <div id="orders" class="orders">
+          <div class="empty-orders">
+            <h3>Noch keine Aufträge.</h3>
+            <p>
+              Bestellen Sie oben einen Service. Hier sehen Sie anschließend
+              Status und Verlauf.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section
+        id="simulation"
+        class="card simulator"
+        aria-labelledby="simulation-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FÜR DIE VORFÜHRUNG</p>
+            <h2 id="simulation-title">Auch wenn nicht alles glattläuft.</h2>
+            <p>
+              Fehler gezielt simulieren und die Reaktion des Systems beobachten.
+            </p>
+          </div>
+          <span class="demo-badge">SIMULATOR</span>
+        </div>
+        <div class="sim-grid">
+          <div>
+            <label for="mode-housekeeping">Housekeeping</label
+            ><select id="mode-housekeeping" data-service="housekeeping">
+              <option value="normal">Normal erreichbar</option>
+              <option value="offline">Dienst nicht erreichbar</option>
+              <option value="lose_response_once">
+                Nächste Annahme: Antwort verlieren
+              </option>
+            </select>
+          </div>
+          <div>
+            <label for="mode-kitchen">Küche</label
+            ><select id="mode-kitchen" data-service="kitchen">
+              <option value="normal">Normal erreichbar</option>
+              <option value="offline">Dienst nicht erreichbar</option>
+              <option value="lose_response_once">
+                Nächste Annahme: Antwort verlieren
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="replay-row">
+          <div>
+            <strong>Technische Wiederholung</strong>
+            <p>
+              Sendet die letzte quittierte Bestellung mit unverändertem Inhalt
+              und demselben Schlüssel.
+            </p>
+          </div>
+          <button class="secondary" id="replay" disabled>
+            Letzte Bestellung erneut senden
+          </button>
+        </div>
+        <p class="field-hint">
+          „Antwort verlieren“ wird nach einer neuen Annahme automatisch
+          zurückgesetzt. „Dienst nicht erreichbar“ bleibt bis zur manuellen
+          Änderung aktiv. Bearbeitungsschritte werden ausschließlich über die
+          Schaltflächen an den Aufträgen simuliert.
+        </p>
+      </section>
+      <footer>
+        <span>staydesk · Hotelservice-Arbeitsprobe</span
+        ><span>Python / FastAPI / SQLite · Lokal auf Ihrem Rechner</span>
+      </footer>
+    </main>
+  </body>
+</html>
