@@ -8,3 +8,5 @@ data/
 .env
 test-results/
 node_modules/
+
+.demo/

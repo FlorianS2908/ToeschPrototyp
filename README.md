@@ -1,3 +1,18 @@
+## Bewerbungsdemo · Bookboost
+
+**Vorführung:** `Start_Demo.cmd` unter Windows. Alternativ nach Installation von
+`requirements-dev.txt`: `python demo.py`. Jeder Start erzeugt eine eigene Sitzung
+unter `.demo/session-*`; vorhandene Arbeitsdaten und frühere Sitzungen bleiben erhalten.
+Nach Beenden mit Strg+C setzt ein erneuter Start die sichtbare Demo zurück.
+
+In fünf Minuten: „2 Handtücher und 1 Pizza“ eingeben → Vorschau prüfen → bestätigen →
+Wiederholung auslösen → beim Küchensimulator „offline“ einstellen → Auftrag erneut
+abgleichen. Die Simulatoren sind lokale Ersatzdienste, keine Hotelintegration.
+
+Prüfung: `python -m pytest -q`, `python -m ruff check .`; mit installiertem Playwright
+und Chromium zusätzlich `node tests/browser_smoke.cjs` (echter Browser und Neustart).
+Analyse, Reviews und aktueller Testnachweis: [Demo-Review](docs/BEWERBUNGSDEMO_REVIEW.md).
+
 # Staydesk · Hotelservice-Prototyp
 
 Lokale Arbeitsprobe: **„Zwei Handtücher und eine Pizza“** wird nach Bestätigung zu
