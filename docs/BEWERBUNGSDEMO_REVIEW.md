@@ -10,7 +10,7 @@ Branch: `codex/bewerbungsdemo-2026-10-04`. Ausgangsstand ist vor Änderungen ges
 | S-R1 | P2 | Reset benötigt manuelles Umbenennen des Datenordners | Separater Demo-Start mit Sicherung/Reset ausschließlich des Demo-Datenpfads. | behoben |
 | S-R2 | P2 | Kein kontinuierlicher plattformübergreifender Nachweis | Bestehende Tests, Browser-Smoke und Windows-CI für den isolierten Branch. | behoben |
 
-Planreview: Der Umfang ist für eine Bewerbungsdemo ausreichend. Bestehende Fachlogik bleibt führend; kein neues Vollprodukt. Die Tests unterscheiden lokale/automatisierte Nachweise von noch ausstehenden nativen Windows- und Live-API-Nachweisen.
+Planreview: Der Umfang ist für eine Bewerbungsdemo ausreichend. Bestehende Fachlogik bleibt führend; kein neues Vollprodukt. Die Tests unterscheiden automatisierte Nachweise von einer persönlichen Vorführung auf dem Zielrechner und optionalen Live-API-Abnahmen.
 
 ## 2. Implementierung
 
@@ -28,7 +28,7 @@ Die aufgeführten Befunde wurden in diesem Feature-Branch korrigiert. Keine offe
 
 52 Pytests und Ruff bestanden. Echter Chromium-Lauf: Bestätigung, Replay, semantische Dublette, Antwortverlust, Teilausfall, Wiederanlauf, Statuswechsel, Mobilansicht und Prozessneustart bestanden.
 
-Windows-CI wird auf dem Feature-Branch geprüft. Hotel-/PMS-Dienste sind lokale Simulatoren.
+Windows- und Ubuntu-CI erfolgreich. Hotel-/PMS-Dienste sind lokale Simulatoren.
 
 Umgebung: Linux, Python 3.12.14, Node 24.19.0, Chromium 153.0.8010.0.
 Teststand: 04.10.2026. Keine produktiven Zugangsdaten oder externen Aktionen im Demo-Lauf.
@@ -36,3 +36,7 @@ Teststand: 04.10.2026. Keine produktiven Zugangsdaten oder externen Aktionen im 
 ## 5. Vorführung
 
 Start und kurzer Ablauf stehen im README. Für eine neue Vorführung zurücksetzen beziehungsweise neu starten. GitHub-Sichtbarkeit und Bewerbungsversand bleiben getrennte Entscheidungen.
+
+## 6. GitHub-Nachweis
+
+[Erfolgreicher CI-Lauf 37206323200](https://github.com/FlorianS2908/ToeschPrototyp/actions/runs/37206323200), geprüfter Implementierungsstand [`9865aa87063f`](https://github.com/FlorianS2908/ToeschPrototyp/commit/9865aa87063f3daed134e203b9668996c2b092a7). Die nachfolgende Dokumentations-/Testergänzung wird auf demselben Branch erneut geprüft.
