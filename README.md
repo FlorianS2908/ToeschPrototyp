@@ -1,5 +1,9 @@
 ## Bewerbungsdemo · Bookboost
 
+Der Demostarter verwendet die eigene Umgebung `.venv-demo`; eine vorhandene `.venv` bleibt erhalten.
+
+Für diesen Test den Branch **`codex/bewerbungsdemo-2026-10-04`** wählen und den neuesten Stand abrufen. Danach `Start_Demo.cmd` aus dem vollständig entpackten Projektordner starten.
+
 **Vorführung:** `Start_Demo.cmd` unter Windows. Alternativ nach Installation von
 `requirements-dev.txt`: `python demo.py`. Jeder Start erzeugt eine eigene Sitzung
 unter `.demo/session-*`; vorhandene Arbeitsdaten und frühere Sitzungen bleiben erhalten.

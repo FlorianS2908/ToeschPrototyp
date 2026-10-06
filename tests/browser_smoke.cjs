@@ -12,7 +12,7 @@ const python =
   process.env.BROWSER_TEST_PYTHON ||
   path.join(
     root,
-    ".venv",
+    ".venv-demo",
     process.platform === "win32" ? "Scripts/python.exe" : "bin/python",
   );
 const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

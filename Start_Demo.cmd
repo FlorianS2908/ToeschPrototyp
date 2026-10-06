@@ -8,34 +8,34 @@ echo  Staydesk - Lokale Hotelservice-Demo
 echo  =================================
 echo.
 echo [1/5] Python und virtuelle Umgebung pruefen ...
-if exist ".venv\Scripts\python.exe" goto environment_ready
+if exist ".venv-demo\Scripts\python.exe" goto environment_ready
 py -3 -c "import sys; sys.exit(not ((3,11) <= sys.version_info[:2] < (3,15)))" >nul 2>&1
 if errorlevel 1 goto try_python
-py -3 -m venv .venv
+py -3 -m venv .venv-demo
 if errorlevel 1 goto environment_error
 goto environment_ready
 
 :try_python
 python -c "import sys; sys.exit(not ((3,11) <= sys.version_info[:2] < (3,15)))" >nul 2>&1
 if errorlevel 1 goto python_error
-python -m venv .venv
+python -m venv .venv-demo
 if errorlevel 1 goto environment_error
 
 :environment_ready
-".venv\Scripts\python.exe" -c "import sys; sys.exit(not ((3,11) <= sys.version_info[:2] < (3,15)))"
+".venv-demo\Scripts\python.exe" -c "import sys; sys.exit(not ((3,11) <= sys.version_info[:2] < (3,15)))"
 if errorlevel 1 goto environment_error
 echo [2/5] Abhaengigkeiten installieren bzw. abgleichen ...
-".venv\Scripts\python.exe" -m pip install --disable-pip-version-check -r requirements-dev.txt
+".venv-demo\Scripts\python.exe" -m pip install --disable-pip-version-check -r requirements-dev.txt
 if errorlevel 1 goto install_error
 echo [3/5] Paketabhaengigkeiten pruefen ...
-".venv\Scripts\python.exe" -m pip check
+".venv-demo\Scripts\python.exe" -m pip check
 if errorlevel 1 goto check_error
 echo [4/5] Automatisierte Tests ausfuehren - isolierte Testdaten ...
-".venv\Scripts\python.exe" -m pytest -q
+".venv-demo\Scripts\python.exe" -m pytest -q
 if errorlevel 1 goto test_error
 echo [5/5] Server starten und Browser oeffnen ...
 echo Das Fenster bitte offen lassen. Beenden mit Strg+C.
-".venv\Scripts\python.exe" demo.py
+".venv-demo\Scripts\python.exe" demo.py
 if errorlevel 1 goto start_error
 echo.
 echo Anwendung beendet. Die Sitzung bleibt im Ordner .demo gespeichert. Naechster Start = neue Demo.
@@ -49,8 +49,8 @@ echo Aktivieren Sie "Add python.exe to PATH" und starten Sie diese Datei erneut.
 goto failed
 :environment_error
 echo FEHLER: Die virtuelle Umgebung konnte nicht erstellt oder verwendet werden.
-echo Pruefen Sie Python, Schreibrechte und den Ordner .venv.
-echo Bei einer kopierten Umgebung: .venv umbenennen und Start.cmd erneut starten.
+echo Pruefen Sie Python, Schreibrechte und den Ordner .venv-demo.
+echo Bei einer kopierten Umgebung: .venv-demo umbenennen und Start_Demo.cmd erneut starten.
 goto failed
 :install_error
 echo FEHLER: Installation fehlgeschlagen. Pruefen Sie Internetzugang und die Meldung oben.

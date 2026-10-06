@@ -40,3 +40,17 @@ Start und kurzer Ablauf stehen im README. Für eine neue Vorführung zurücksetz
 ## 6. GitHub-Nachweis
 
 [Erfolgreicher CI-Lauf 37206323200](https://github.com/FlorianS2908/ToeschPrototyp/actions/runs/37206323200), geprüfter Implementierungsstand [`9865aa87063f`](https://github.com/FlorianS2908/ToeschPrototyp/commit/9865aa87063f3daed134e203b9668996c2b092a7). Die nachfolgende Dokumentations-/Testergänzung wird auf demselben Branch erneut geprüft.
+
+## Nachreview und Korrekturen vom 06.10.2026
+
+Scope: vorhandene Bewerbungsdemo, Windows-Einstieg, Freigaben, Fehlerfälle und Wiederaufnahme. Keine Erweiterung zur Produktivintegration.
+
+| ID | Prio | Nachvollziehbarer Befund | Umgesetzte Korrektur und Nachweis |
+|---|---|---|---|
+| S-N1 | P2 | Demostarter installierte Test- und Laufzeitpakete in die reguläre .venv; Fehlermeldung verwies auf Start.cmd. | Eigene .venv-demo; Browser-Smoke nutzt dieselbe Umgebung; Fehlermeldung zeigt Start_Demo.cmd. |
+
+### Erneuter Testlauf
+
+52 Pytests bestanden (JUnit: 0 Fehler, 0 fehlgeschlagen), Ruff erfolgreich. Vollständiger Chromium-Smoke einschließlich Antwortverlust, Teilausfall, Wiederanlauf, Mobilansicht und echtem Prozessneustart bestanden; keine JavaScript-Fehler.
+
+Schlussreview: bestätigte Befunde im Demo-Scope behoben. Der persönliche Doppelklick-/Vorführtest auf Florians Windows-Rechner bleibt die nächste Abnahme; CourseForge zusätzlich in Excel prüfen. Live-KI, Mailversand und Änderung der Repository-Sichtbarkeit sind nicht Teil dieses Nachreviews.
